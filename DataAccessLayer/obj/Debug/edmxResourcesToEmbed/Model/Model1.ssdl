@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbMvcEF2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorId" />
+    </Key>
+    <Property Name="AuthorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="AuthorDetail">
+    <Key>
+      <PropertyRef Name="DetailId" />
+    </Key>
+    <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DetailAuthorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AuthorsBooks">
+    <Key>
+      <PropertyRef Name="MapId" />
+    </Key>
+    <Property Name="MapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MapAuthorId" Type="int" Nullable="false" />
+    <Property Name="MapBookId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="About" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_AuthorDetail_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="1" />
+    <End Role="AuthorDetail" Type="Self.AuthorDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorId" />
+      </Principal>
+      <Dependent Role="AuthorDetail">
+        <PropertyRef Name="DetailAuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuthorsBooks_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="1" />
+    <End Role="AuthorsBooks" Type="Self.AuthorsBooks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorId" />
+      </Principal>
+      <Dependent Role="AuthorsBooks">
+        <PropertyRef Name="MapAuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuthorsBooks_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="AuthorsBooks" Type="Self.AuthorsBooks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="AuthorsBooks">
+        <PropertyRef Name="MapBookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeleteBulkAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="InsertBulkAuthore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdateBulkAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="dbMvcEF2ModelStoreContainer">
+    <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AuthorDetail" EntityType="Self.AuthorDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AuthorsBooks" EntityType="Self.AuthorsBooks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AuthorDetail_Author" Association="Self.FK_AuthorDetail_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="AuthorDetail" EntitySet="AuthorDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuthorsBooks_Author" Association="Self.FK_AuthorsBooks_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuthorsBooks_Book" Association="Self.FK_AuthorsBooks_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

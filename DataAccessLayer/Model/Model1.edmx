@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbMvcEF2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AuthorId" />
+          </Key>
+          <Property Name="AuthorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AuthorDetail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DetailAuthorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthorsBooks">
+          <Key>
+            <PropertyRef Name="MapId" />
+          </Key>
+          <Property Name="MapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MapAuthorId" Type="int" Nullable="false" />
+          <Property Name="MapBookId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="About" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_AuthorDetail_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorDetail" Type="Self.AuthorDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorId" />
+            </Principal>
+            <Dependent Role="AuthorDetail">
+              <PropertyRef Name="DetailAuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorsBooks" Type="Self.AuthorsBooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorId" />
+            </Principal>
+            <Dependent Role="AuthorsBooks">
+              <PropertyRef Name="MapAuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="AuthorsBooks" Type="Self.AuthorsBooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="AuthorsBooks">
+              <PropertyRef Name="MapBookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteBulkAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="InsertBulkAuthore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateBulkAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="dbMvcEF2ModelStoreContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorDetail" EntityType="Self.AuthorDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorsBooks" EntityType="Self.AuthorsBooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AuthorDetail_Author" Association="Self.FK_AuthorDetail_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="AuthorDetail" EntitySet="AuthorDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Author" Association="Self.FK_AuthorsBooks_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Book" Association="Self.FK_AuthorsBooks_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbMvcEF2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AuthorId" />
+          </Key>
+          <Property Name="AuthorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AuthorDetails" Relationship="Self.FK_AuthorDetail_Author" FromRole="Author" ToRole="AuthorDetail" />
+          <NavigationProperty Name="AuthorsBooks" Relationship="Self.FK_AuthorsBooks_Author" FromRole="Author" ToRole="AuthorsBooks" />
+        </EntityType>
+        <EntityType Name="AuthorDetail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DetailAuthorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_AuthorDetail_Author" FromRole="AuthorDetail" ToRole="Author" />
+        </EntityType>
+        <EntityType Name="AuthorsBook">
+          <Key>
+            <PropertyRef Name="MapId" />
+          </Key>
+          <Property Name="MapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MapAuthorId" Type="Int32" Nullable="false" />
+          <Property Name="MapBookId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_AuthorsBooks_Author" FromRole="AuthorsBooks" ToRole="Author" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_AuthorsBooks_Book" FromRole="AuthorsBooks" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="About" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AuthorsBooks" Relationship="Self.FK_AuthorsBooks_Book" FromRole="Book" ToRole="AuthorsBooks" />
+        </EntityType>
+        <Association Name="FK_AuthorDetail_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorDetail" Type="Self.AuthorDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorId" />
+            </Principal>
+            <Dependent Role="AuthorDetail">
+              <PropertyRef Name="DetailAuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorsBooks" Type="Self.AuthorsBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AuthorId" />
+            </Principal>
+            <Dependent Role="AuthorsBooks">
+              <PropertyRef Name="MapAuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="AuthorsBooks" Type="Self.AuthorsBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="AuthorsBooks">
+              <PropertyRef Name="MapBookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbMvcEF2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="AuthorDetails" EntityType="Self.AuthorDetail" />
+          <EntitySet Name="AuthorsBooks" EntityType="Self.AuthorsBook" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <AssociationSet Name="FK_AuthorDetail_Author" Association="Self.FK_AuthorDetail_Author">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="AuthorDetail" EntitySet="AuthorDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Author" Association="Self.FK_AuthorsBooks_Author">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Book" Association="Self.FK_AuthorsBooks_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="AuthorsBooks" EntitySet="AuthorsBooks" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteBulkAuthor" />
+          <FunctionImport Name="InsertBulkAuthore" />
+          <FunctionImport Name="UpdateBulkAuthor" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbMvcEF2ModelStoreContainer" CdmEntityContainer="dbMvcEF2Entities">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="dbMvcEF2Model.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorDetails">
+            <EntityTypeMapping TypeName="dbMvcEF2Model.AuthorDetail">
+              <MappingFragment StoreEntitySet="AuthorDetail">
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DetailAuthorId" ColumnName="DetailAuthorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorsBooks">
+            <EntityTypeMapping TypeName="dbMvcEF2Model.AuthorsBook">
+              <MappingFragment StoreEntitySet="AuthorsBooks">
+                <ScalarProperty Name="MapId" ColumnName="MapId" />
+                <ScalarProperty Name="MapAuthorId" ColumnName="MapAuthorId" />
+                <ScalarProperty Name="MapBookId" ColumnName="MapBookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="dbMvcEF2Model.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="About" ColumnName="About" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteBulkAuthor" FunctionName="dbMvcEF2Model.Store.DeleteBulkAuthor" />
+          <FunctionImportMapping FunctionImportName="InsertBulkAuthore" FunctionName="dbMvcEF2Model.Store.InsertBulkAuthore" />
+          <FunctionImportMapping FunctionImportName="UpdateBulkAuthor" FunctionName="dbMvcEF2Model.Store.UpdateBulkAuthor" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

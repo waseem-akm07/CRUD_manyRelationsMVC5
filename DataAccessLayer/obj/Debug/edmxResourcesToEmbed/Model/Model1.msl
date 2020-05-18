@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbMvcEF2ModelStoreContainer" CdmEntityContainer="dbMvcEF2Entities">
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="dbMvcEF2Model.Author">
+        <MappingFragment StoreEntitySet="Author">
+          <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuthorDetails">
+      <EntityTypeMapping TypeName="dbMvcEF2Model.AuthorDetail">
+        <MappingFragment StoreEntitySet="AuthorDetail">
+          <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DetailAuthorId" ColumnName="DetailAuthorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuthorsBooks">
+      <EntityTypeMapping TypeName="dbMvcEF2Model.AuthorsBook">
+        <MappingFragment StoreEntitySet="AuthorsBooks">
+          <ScalarProperty Name="MapId" ColumnName="MapId" />
+          <ScalarProperty Name="MapAuthorId" ColumnName="MapAuthorId" />
+          <ScalarProperty Name="MapBookId" ColumnName="MapBookId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="dbMvcEF2Model.Book">
+        <MappingFragment StoreEntitySet="Book">
+          <ScalarProperty Name="BookId" ColumnName="BookId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="About" ColumnName="About" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DeleteBulkAuthor" FunctionName="dbMvcEF2Model.Store.DeleteBulkAuthor" />
+    <FunctionImportMapping FunctionImportName="InsertBulkAuthore" FunctionName="dbMvcEF2Model.Store.InsertBulkAuthore" />
+    <FunctionImportMapping FunctionImportName="UpdateBulkAuthor" FunctionName="dbMvcEF2Model.Store.UpdateBulkAuthor" />
+  </EntityContainerMapping>
+</Mapping>
